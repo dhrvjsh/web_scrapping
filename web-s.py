@@ -1,17 +1,16 @@
-from selenium import webdriver
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import pandas as pd
-
-driver = webdriver.Chrome("/usr/bin/chromedriver")
+import urllib.request as ur
 
 
 products=[]  #List to store name of the product
 prices=[]    #List to store price of the product
 ratings=[]   #List to store rating of the priduct
-driver.get("the url address")
 
-content = driver.page_source
-soup = BeautifulSoup(content)
+urlToScrape = "https://www.flipkart.com/laptops/~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq"
+r = ur.urlopen(urlToScrape).read()
+
+soup = BeautifulSoup(r, "lxml")
 for a in soup.findAll('a', href=True, attrs={'class':'_31qSD5'}):
 	name=a.find('div', attrs={'class':'_3wU53n'})
 	price=a.find('div', attrs={'class':'_1vC4OE _2rQ-NK'})
